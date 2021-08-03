@@ -1,4 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { IProduct } from './product.schema';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -11,7 +12,7 @@ export class ProductsController {
     }
 
     @Get(':id')
-    async show(@Param('id') id: string) {
+    async show(@Param('id') id: string): Promise<IProduct> {
         return await this.productService.findOne(id);
     }
 }
