@@ -5,10 +5,10 @@ import { Product, ProductDocument, IProduct } from './product.schema';
 
 @Injectable()
 export class ProductsService {
-    constructor(@InjectModel(Product.name) private productsService: Model<ProductDocument>) {}
+    constructor(@InjectModel(Product.name) private productModel: Model<ProductDocument>) {}
 
     async findAll(): Promise<IProduct[]> {
-        let products = await this.productsService.find().exec();
+        let products = await this.productModel.find().exec();
 
         let result = [];
         for (const product of products) {
@@ -19,7 +19,7 @@ export class ProductsService {
     }
 
     async findOne(id: string): Promise<IProduct> {
-        let product = await this.productsService.findById(id).exec();
+        let product = await this.productModel.findById(id).exec();
 
         return this.prepareResponse(product);
     }
