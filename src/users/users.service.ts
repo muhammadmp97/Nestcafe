@@ -8,6 +8,16 @@ export class UsersService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
     async findByUsername(username: string): Promise<UserDocument> {
-        return await this.userModel.findOne({username: username}).exec();
+        return await this.userModel.findOne({ username }).exec();
+    }
+
+    async createUser(user: { username: string, password: string, full_name: string }): Promise<UserDocument> | null {
+        const dbUser = await this.findByUsername(user.username);
+
+        if (dbUser) {
+            return null;
+        }
+
+        return await this.userModel.create(user);
     }
 }
