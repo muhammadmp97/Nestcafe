@@ -20,4 +20,8 @@ export class UsersService {
 
         return await this.userModel.create(user);
     }
+
+    async updateAddress(username: string, address: string) {
+        return await this.userModel.findOneAndUpdate({ username }, { address }).exec();
+    }
 }
