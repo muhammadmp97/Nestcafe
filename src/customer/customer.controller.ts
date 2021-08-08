@@ -1,11 +1,12 @@
-import { BadRequestException, Body, Controller, Patch, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Inject, Patch, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from 'src/users/users.service';
 import { changeAddressDto } from './Dto/change-address.dto';
+import { ReverseGeocoding } from './Util/reverse-geocoding';
 
 @Controller('customer')
 export class CustomerController {
-    constructor(private readonly usersService: UsersService) { }
+    constructor(private readonly usersService: UsersService, private readonly reverseGeocoding: ReverseGeocoding) { }
 
     @Patch('address')
     @UseGuards(JwtAuthGuard)
@@ -13,7 +14,8 @@ export class CustomerController {
         if (body.address) {
             this.usersService.updateAddress(req.user.username, body.address);
         } else if (body.lat && body.long) {
-            // TODO use a reverse geocoding service
+            const address = await this.reverseGeocoding.getAddress(body.lat, body.long);
+            this.usersService.updateAddress(req.user.username, address);
         } else {
             throw new BadRequestException();
         }
