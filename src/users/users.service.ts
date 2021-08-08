@@ -5,7 +5,7 @@ import { User, UserDocument } from './user.schema';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
     async findByUsername(username: string): Promise<UserDocument> {
         return await this.userModel.findOne({ username }).exec();
