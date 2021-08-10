@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Inject, Patch, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Patch, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from 'src/users/users.service';
 import { changeAddressDto } from './Dto/change-address.dto';

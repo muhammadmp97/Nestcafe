@@ -8,7 +8,7 @@ import { UserDocument } from 'src/users/user.schema';
 export class AuthService {
     constructor(private usersService: UsersService, private jwtService: JwtService) { }
 
-    async registerUser(username: string, password: string, fullName: string) {
+    async register(username: string, password: string, fullName: string) {
         const user = await this.usersService.createUser({
             username: username.toLowerCase(),
             password: await bcrypt.hash(password, 10),
