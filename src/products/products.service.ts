@@ -24,7 +24,7 @@ export class ProductsService {
         return this.prepareResponse(product);
     }
 
-    private prepareResponse(product: ProductDocument): IProduct {
+    prepareResponse(product: any): IProduct {
         return {
             id: product._id,
             title: product.title,
