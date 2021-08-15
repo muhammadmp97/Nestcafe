@@ -30,6 +30,22 @@ export class OrdersService {
         return this.prepareResponse(order); 
     }
 
+    async deleteOrder(userId: string, productId: string): Promise<IOrder> {
+        const query = { owner: new ObjectId(userId), product: new ObjectId(productId) };
+
+        const order = await this.orderModel.findOneAndUpdate(
+            query,
+            { $inc: { count: -1 } },
+            { new: true }
+        ).populate('product').exec();
+
+        if (order.count < 1) {
+            this.orderModel.deleteOne(query).exec();
+        }
+
+        return this.prepareResponse(order); 
+    }
+
     private prepareResponse(order: any): IOrder {
         return {
             id: order._id,

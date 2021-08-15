@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, HttpException, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { IOrder } from './orders.schema';
 import { OrdersService } from './orders.service';
@@ -17,6 +17,18 @@ export class OrdersController {
     @UseGuards(JwtAuthGuard)
     async store(@Param('id') productId: string, @Req() req): Promise<IOrder> {
         const order = await this.ordersService.createOrder(req.user.userId, productId);
+
+        if (! order) {
+            throw new HttpException('Something went wrong!', 500);
+        }
+
+        return order;
+    }
+
+    @Delete('/products/:id/order')
+    @UseGuards(JwtAuthGuard)
+    async destroy(@Param('id') productId: string, @Req() req): Promise<IOrder> {
+        const order = await this.ordersService.deleteOrder(req.user.userId, productId);
 
         if (! order) {
             throw new HttpException('Something went wrong!', 500);
