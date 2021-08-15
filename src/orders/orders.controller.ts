@@ -36,4 +36,10 @@ export class OrdersController {
 
         return order;
     }
+
+    @Delete('/orders')
+    @UseGuards(JwtAuthGuard)
+    async destroyAll(@Req() req) {
+        this.ordersService.deleteAll(req.user.userId);
+    }
 }

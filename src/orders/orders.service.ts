@@ -46,6 +46,10 @@ export class OrdersService {
         return this.prepareResponse(order); 
     }
 
+    async deleteAll(userId: string) {
+        this.orderModel.deleteMany({ owner: new ObjectId(userId) }).exec();
+    }
+
     private prepareResponse(order: any): IOrder {
         return {
             id: order._id,
