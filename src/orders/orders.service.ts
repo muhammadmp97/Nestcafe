@@ -9,6 +9,14 @@ const ObjectId = require('mongoose').Types.ObjectId;
 export class OrdersService {
     constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>, private productService: ProductsService) { }
 
+    async findAll(): Promise<OrderDocument[]> {
+        const orders = await this.orderModel.find()
+            .populate(['product', 'owner'])
+            .exec();
+
+        return orders;
+    }
+
     async findByUserId(id: string): Promise<IOrder[]> {
         const orders = await this.orderModel.find().where({ owner: id }).populate(['product', 'owner']).exec();
 

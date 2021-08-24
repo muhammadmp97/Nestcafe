@@ -10,7 +10,7 @@ export class OrdersController {
     @Get('orders')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async index(@Req() req) { 
-        return 'Hooray!';
-        // TODO we should return the orders paginated
+        // TODO Paginate the orders
+        return await this.ordersService.findAll();
     }
 }
