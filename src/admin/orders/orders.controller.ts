@@ -10,6 +10,8 @@ export class OrdersController {
     @Get('orders')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async index(@Req() req) { 
-        return await this.ordersService.findAll(Number.parseInt(req.query.page) || 1, 10);
+        const page = Number.parseInt(req.query.page) || 1;
+        
+        return await this.ordersService.findAll(page, 10);
     }
 }
