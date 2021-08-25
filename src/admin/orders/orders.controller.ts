@@ -10,7 +10,6 @@ export class OrdersController {
     @Get('orders')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async index(@Req() req) { 
-        // TODO Paginate the orders
-        return await this.ordersService.findAll();
+        return await this.ordersService.findAll(Number.parseInt(req.query.page) || 1, 10);
     }
 }
