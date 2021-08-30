@@ -21,9 +21,15 @@ export class OrdersService {
         return orders;
     }
 
-    async findByUserId(id: string): Promise<IOrder[]> {
-        // TODO Add pagination
-        const orders = await this.orderModel.find().where({ owner: id }).populate(['product', 'owner']).exec();
+    async findByUserId(id: string, page: number, perPage: number): Promise<IOrder[]> {
+        const skip = (page <= 1) ? 0 : (page - 1) * perPage;
+
+        const orders = await this.orderModel.find()
+            .where({ owner: id })
+            .limit(perPage)
+            .skip(skip)
+            .populate(['product', 'owner'])
+            .exec();
 
         let result = [];
         for (const order of orders) {

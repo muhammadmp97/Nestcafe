@@ -9,8 +9,10 @@ export class OrdersController {
 
     @Get('/orders')
     @UseGuards(JwtAuthGuard)
-    async index(@Req() req): Promise<IOrder[]> { 
-        return this.ordersService.findByUserId(req.user.userId);
+    async index(@Req() req): Promise<IOrder[]> {
+        const page = Number.parseInt(req.query.page) || 1;
+
+        return this.ordersService.findByUserId(req.user.userId, page, 10);
     }
 
     @Post('/products/:id/order')
