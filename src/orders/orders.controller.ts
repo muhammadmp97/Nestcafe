@@ -12,7 +12,7 @@ export class OrdersController {
     async index(@Req() req): Promise<IOrder[]> {
         const page = Number.parseInt(req.query.page) || 1;
 
-        return this.ordersService.findByUserId(req.user.userId, page, 10);
+        return this.ordersService.findByUserId(req.user.userId, page);
     }
 
     @Post('/products/:id/order')

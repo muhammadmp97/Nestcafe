@@ -12,6 +12,6 @@ export class OrdersController {
     async index(@Req() req) { 
         const page = Number.parseInt(req.query.page) || 1;
         
-        return await this.ordersService.findAll(page, 10);
+        return await this.ordersService.findAll(page);
     }
 }

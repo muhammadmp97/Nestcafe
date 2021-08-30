@@ -9,7 +9,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 export class OrdersService {
     constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>, private productService: ProductsService) { }
 
-    async findAll(page: number, perPage: number): Promise<OrderDocument[]> {
+    async findAll(page: number = 1, perPage: number = 10): Promise<OrderDocument[]> {
         const skip = (page <= 1) ? 0 : (page - 1) * perPage;
 
         const orders = await this.orderModel.find()
@@ -21,7 +21,7 @@ export class OrdersService {
         return orders;
     }
 
-    async findByUserId(id: string, page: number, perPage: number): Promise<IOrder[]> {
+    async findByUserId(id: string, page: number = 1, perPage: number = 10): Promise<IOrder[]> {
         const skip = (page <= 1) ? 0 : (page - 1) * perPage;
 
         const orders = await this.orderModel.find()
