@@ -49,6 +49,10 @@ export class OrdersService {
         return this.prepareResponse(order); 
     }
 
+    async updateStatus(id: string, status: string): Promise<any> {
+        await this.orderModel.findOneAndUpdate({ _id: id }, { status: status });
+    }
+
     async deleteOrder(userId: string, productId: string): Promise<IOrder> {
         const query = { owner: new ObjectId(userId), product: new ObjectId(productId) };
 
