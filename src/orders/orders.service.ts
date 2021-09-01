@@ -46,7 +46,7 @@ export class OrdersService {
             { upsert: true, new: true, setDefaultsOnInsert: true }
         ).populate('product').exec();
 
-        return this.prepareResponse(order); 
+        return this.prepareResponse(order);
     }
 
     async updateStatus(id: string, status: string): Promise<any> {
