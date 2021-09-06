@@ -2,6 +2,7 @@ import { BadRequestException, Body, Controller, Get, Patch, Req, Res, UseGuards 
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UsersService } from 'src/users/users.service';
 import { changeAddressDto } from './Dto/change-address.dto';
+import { changeFullnameDto } from './Dto/change-fullname.dto';
 import { ReverseGeocoding } from './Util/reverse-geocoding';
 
 @Controller('customer')
@@ -25,5 +26,11 @@ export class CustomerController {
         } else {
             throw new BadRequestException();
         }
+    }
+
+    @Patch('fullname')
+    @UseGuards(JwtAuthGuard)
+    async updateFullname(@Req() req, @Body() body: changeFullnameDto) {
+        this.usersService.updateFullname(req.user.username, body.full_name);
     }
 }

@@ -24,4 +24,8 @@ export class UsersService {
     async updateAddress(username: string, address: string) {
         return await this.userModel.findOneAndUpdate({ username }, { address }).exec();
     }
+
+    async updateFullname(username: string, fullname: string) {
+        return await this.userModel.findOneAndUpdate({ username }, { full_name: fullname }).exec();
+    }
 }
