@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  app:
+    image: "node:14-slim"
+    container_name: nestcafe-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "node"
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    expose: 
+      - 3000
+    depends_on:
+      - mongo
+    networks:
+      - nest-mongo
+    tty: true
+    command: "npm start"
+  mongo:
+    container_name: nest-mongo
+    restart: always
+    image: mongo:4.4.8
+    volumes:
+      - ./data:/data/db
+    networks:
+      - nest-mongo
+    expose:
+      - 27017
+networks:
+  nest-mongo:
