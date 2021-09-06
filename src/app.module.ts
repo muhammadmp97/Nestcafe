@@ -13,7 +13,7 @@ import { AdminOrdersModule } from './admin/orders/orders.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(`mongodb://localhost/${process.env.DATABASE_NAME}`),
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     ProductsModule,
     AuthModule,
     UsersModule,
