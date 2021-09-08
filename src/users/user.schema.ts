@@ -8,7 +8,7 @@ export class User {
     @Prop({ required: true, lowercase: true })
     username: string;
 
-    @Prop({ required: true, select: false })
+    @Prop({ required: true })
     password: string;
 
     @Prop({ default: null })

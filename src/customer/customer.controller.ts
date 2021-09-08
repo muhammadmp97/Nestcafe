@@ -11,8 +11,13 @@ export class CustomerController {
 
     @Get('me')
     @UseGuards(JwtAuthGuard)
-    getMe(@Req() req) {
-        return this.usersService.findByUsername(req.user.username);
+    async getMe(@Req() req) {
+        let customer = await this.usersService.findByUsername(req.user.username);
+        
+        let output = customer.toObject();
+        delete output.password;
+
+        return output;
     }
 
     @Patch('address')
