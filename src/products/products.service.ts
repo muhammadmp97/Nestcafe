@@ -33,4 +33,12 @@ export class ProductsService {
             price: product.price,
         }
     }
+
+    async createProduct(title: string, description: string, photo: string, price: number): Promise<IProduct> {
+        let product = await this.productModel.create({
+            title, description, photo, price
+        });
+
+        return this.prepareResponse(product);
+    }
 }
