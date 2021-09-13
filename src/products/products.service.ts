@@ -41,4 +41,14 @@ export class ProductsService {
 
         return this.prepareResponse(product);
     }
+
+    async updateProduct(id: string, title: string, description: string, photo: string, price: number): Promise<IProduct> {
+        let product = await this.productModel.findOneAndUpdate(
+            { _id: id },
+            { title, description, photo, price },
+            { new: true }
+        ).exec();
+
+        return this.prepareResponse(product);
+    }
 }

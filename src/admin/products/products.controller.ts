@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { IProduct } from 'src/products/product.schema';
@@ -12,8 +12,14 @@ export class ProductsController {
     @Post('products')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async store(@Body() body: CreateProductDto): Promise<IProduct> { 
-        return await this.productsService.createProduct(
+        return this.productsService.createProduct(
             body.title, body.description, body.photo, body.price
         );
+    }
+
+    @Put('products/:id')
+    @UseGuards(JwtAuthGuard, AdminAuthGuard)
+    async update(@Param('id') id: string, @Body() body: CreateProductDto) {
+        return this.productsService.updateProduct(id, body.title, body.description, body.photo, body.price);
     }
 }
