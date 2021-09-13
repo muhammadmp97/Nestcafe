@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { IProduct } from 'src/products/product.schema';
@@ -21,5 +21,11 @@ export class ProductsController {
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async update(@Param('id') id: string, @Body() body: CreateProductDto) {
         return this.productsService.updateProduct(id, body.title, body.description, body.photo, body.price);
+    }
+
+    @Delete('products/:id')
+    @UseGuards(JwtAuthGuard, AdminAuthGuard)
+    async delete(@Param('id') id: string) {
+        this.productsService.deleteProduct(id);
     }
 }

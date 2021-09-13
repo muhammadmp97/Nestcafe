@@ -51,4 +51,8 @@ export class ProductsService {
 
         return this.prepareResponse(product);
     }
+
+    async deleteProduct(id: string) {
+        this.productModel.deleteOne({ _id: id }).exec();
+    }
 }
