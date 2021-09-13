@@ -12,20 +12,20 @@ export class ProductsController {
     @Post('products')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async store(@Body() body: CreateProductDto): Promise<IProduct> { 
-        return this.productsService.createProduct(
+        return this.productsService.create(
             body.title, body.description, body.photo, body.price
         );
     }
 
     @Put('products/:id')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
-    async update(@Param('id') id: string, @Body() body: CreateProductDto) {
-        return this.productsService.updateProduct(id, body.title, body.description, body.photo, body.price);
+    async update(@Param('id') id: string, @Body() body: CreateProductDto): Promise<IProduct> {
+        return this.productsService.update(id, body.title, body.description, body.photo, body.price);
     }
 
     @Delete('products/:id')
     @UseGuards(JwtAuthGuard, AdminAuthGuard)
     async delete(@Param('id') id: string) {
-        this.productsService.deleteProduct(id);
+        this.productsService.delete(id);
     }
 }

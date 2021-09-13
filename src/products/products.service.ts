@@ -34,7 +34,7 @@ export class ProductsService {
         }
     }
 
-    async createProduct(title: string, description: string, photo: string, price: number): Promise<IProduct> {
+    async create(title: string, description: string, photo: string, price: number): Promise<IProduct> {
         let product = await this.productModel.create({
             title, description, photo, price
         });
@@ -42,7 +42,7 @@ export class ProductsService {
         return this.prepareResponse(product);
     }
 
-    async updateProduct(id: string, title: string, description: string, photo: string, price: number): Promise<IProduct> {
+    async update(id: string, title: string, description: string, photo: string, price: number): Promise<IProduct> {
         let product = await this.productModel.findOneAndUpdate(
             { _id: id },
             { title, description, photo, price },
@@ -52,7 +52,7 @@ export class ProductsService {
         return this.prepareResponse(product);
     }
 
-    async deleteProduct(id: string) {
+    async delete(id: string) {
         this.productModel.deleteOne({ _id: id }).exec();
     }
 }
